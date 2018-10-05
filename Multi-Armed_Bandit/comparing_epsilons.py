@@ -16,7 +16,7 @@ class Bandit:
         self.mean = (1-1.0/self.N)*self.mean+(1.0/self.N)*x
 
 
-def runExperiment(m1, m2, m3, eps, N):
+def run_experiment(m1, m2, m3, eps, N):
     # eps or epsilon determines the percentage that the algorithm will explore rather than exploit. (trying new slot machines rather than exploiting the best one)
 
     bandits = [Bandit(m1), Bandit(m2), Bandit(m3)]
@@ -24,7 +24,7 @@ def runExperiment(m1, m2, m3, eps, N):
 
     for i in range(N):
         # epsilon-greedy
-        p = np.random.randn()
+        p = np.random.random()
 
         if p < eps:
             j = np.random.choice(len(bandits))
@@ -36,7 +36,7 @@ def runExperiment(m1, m2, m3, eps, N):
 
         data[i] = x
 
-    cumulative_average = np.cumsum(data) / np.arange(N) + 1
+    cumulative_average = np.cumsum(data) / (np.arange(N) + 1)
     # plt.plot(cumulative_average)
     # plt.plot(np.ones(N)*m1)
     # plt.plot(np.ones(N)*m2)
@@ -48,9 +48,9 @@ def runExperiment(m1, m2, m3, eps, N):
 
 
 if __name__ == "__main__":
-    e1 = runExperiment(1, 2, 3, .1, 500)
-    e2 = runExperiment(1, 2, 3, .05, 500)
-    e3 = runExperiment(1, 2, 3, .01, 500)
+    e1 = run_experiment(1, 2, 3, .1, 5000)
+    e2 = run_experiment(1, 2, 3, .05, 5000)
+    e3 = run_experiment(1, 2, 3, .01, 5000)
 
     # logarithmic
     plt.plot(e1, label="E1")
