@@ -59,16 +59,10 @@ class Environment:
         return self.winner
 
 
-env = Environment()
-env.update_and_get_winner(0, 0, "X")
-env.update_and_get_winner(1, 1, "O")
-env.update_and_get_winner(2, 2, "O")
-env.update_and_get_winner(0, 1, "X")
-env.update_and_get_winner(1, 2, "j")
-env.update_and_get_winner(2, 0, "O")
-env.update_and_get_winner(0, 2, "f")
-env.update_and_get_winner(1, 0, "g")
-env.update_and_get_winner(2, 1, "X")
-env.draw()
-print(env.winner)
-# env.draw()
+if __name__ == "__main__":
+    env = Environment()
+    env.update_and_get_winner(0, 0, "X")
+    env.update_and_get_winner(1, 1, "X")
+    env.update_and_get_winner(2, 2, "X")
+    env.draw()
+    print(env.winner)
