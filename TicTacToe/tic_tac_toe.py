@@ -1,8 +1,9 @@
 class Environment:
-    def __init__(self):
+    def __init__(self, size=3):
         # Generate board in a matrix
-        self.tiles = [[None]*3 for _ in range(3)]
-        self.won = False
+        self.tiles = [[None]*size for _ in range(size)]
+        self.winner = None
+        self.size = size
 
     def draw(self):
         for row in self.tiles:
@@ -11,39 +12,43 @@ class Environment:
                 temp += "- " if tile == None else tile + " "
             print(temp)
 
-    def update_and_check_for_winner(self, x, y, char):
+    def update_and_get_winner(self, x, y, char):
+        # If already won, ignore all inputs and return winner.
+        if not self.winner == None:
+            return self.winner
+
         self.tiles[y][x] = char
 
         # Horizontal win
         if self.tiles[y].count(char) == len(self.tiles[y]):
-            self.won = True
+            self.winner = char
             return True
 
         # Vertical win
         vert = [row[x] for row in self.tiles]
         if vert.count(char) == len(vert):
-            self.won = True
+            self.winner = char
             return True
 
         # Slant win
         winP = True
         winN = True
-        for i in xrange(3):
+        for i in xrange(self.size):
             if winN:
-                if self.tiles[2-i][2-i] is not char:
+                if self.tiles[self.size-i-1][self.size-i-1] is not char:
                     winN = False
             if winP:
-                if self.tiles[2-i][i] is not char:
+                if self.tiles[self.size-i-1][i] is not char:
                     winP = False
 
-        self.won = winN or winP
-        return self.won
+        self.winner = char if winN or winP else None
+        return self.winner
 
 
 env = Environment()
-env.update_and_check_for_winner(0, 2, "O")
-env.update_and_check_for_winner(1, 1, "O")
-env.update_and_check_for_winner(2, 0, "O")
+env.update_and_get_winner(0, 0, "X")
+env.update_and_get_winner(1, 1, "X")
+env.update_and_get_winner(2, 2, "X")
 env.draw()
-print(env.won)
+print(env.winner)
 # env.draw()
