@@ -1,0 +1,36 @@
+** epsilon-greedy:
+    - Basically sets a percentage (epsilon) for how often the algorithm spends
+    "exploring" or trying other sub-optimal actions.
+algorithm:
+    - random number is generated, if this number is within the epsilon threshold,
+    then an action is chosen at random.
+    - if the random number is not within the epsilon threshold, then we do the action
+    with the most optimal mean.
+
+** chernoff-hoeffding bound (UCB1):
+    - based on confidence intervals/bounds
+    - basically states that the probability that the 
+    |actualMean - trueMean| >= epsilon <= 2^ (-2epsilon^2 * N)
+    - (basically means that the confidence rate increases exponentially the more 
+    test cases you have)
+
+algorithm:
+    - Xsub(UCB-j) = mean(Xsub(j)) + sqrt(2 (logN/Nsub(j))
+    - Basically, the smaller N is, the larger the difference between actual mean and true mean
+    - the larger N is, since the numerator is logarithmic and the denominator is
+    N, log(N) will eventually grow at a slower pace meaning it will converge to a purely
+    greedy strategy.
+
+** bayesian method / thompson sampling:
+    - also based on confidence intervals/bounds
+    - central limit theorem says the mean is appx. gaussian
+    - u(true mean) is now random
+    - posterior distribution
+
+algorithm:
+    - as the confidence curve is fat (meaning there are a small amount of data)
+    the algorithm is more likely to explore.
+    - conversely, as the confidence curve is narrow (meaning there is a large data set)
+    the algorithm is more likely to exploit.
+    - rather than using some sort of fixed exploration percentage, this method
+    is useful as it is a function of the posterior / previous data.
