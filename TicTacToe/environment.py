@@ -4,16 +4,20 @@ import numpy as np
 class Environment:
     def __init__(self, size=3):
         # Generate board in a matrix
-        self.tiles = np.zeros((size, size))
         self.x = -1
         self.o = 1
-        self.winner = None
-        self.ended = False
         self.size = size
         self.num_states = 3**(size*size)
+        self.reset()
+
+    def reset(self):
+        self.tiles = np.zeros((self.size, self.size))
+        self.winner = None
+        self.ended = False
+        return self
 
     def reward(self, sym):
-        if game_over():
+        if not self.game_over():
             return 0
         return 1 if self.winner == sym else 0
 
@@ -82,46 +86,63 @@ class Environment:
         for y in xrange(self.size):
             for x in xrange(self.size):
                 sym = self.tiles[y, x]
-                if sym is None:
-                    v = 0
-                elif sym is self.o:
+                if sym == self.x:
                     v = 1
-                elif sym is self.x:
+                elif sym == self.o:
                     v = 2
-            h += (3**k) * v
-            k += 1
+                else:
+                    v = 0
+                h += (3**k) * v
+                k += 1
         return h
 
 
-def get_state_hash_and_winner(env, x=0, y=0):
+def get_state_hash_and_winner(env, i=0, j=0):
     results = []
 
-    for v in (None, env.x, env.o):
-        env.tiles[y, x] = v
+    for v in (0, env.x, env.o):
+        env.tiles[i, j] = v
 
-        if y == env.size - 1:
-            if x == env.size - 1:
+        if j == env.size - 1:
+            if i == env.size - 1:
                 # board is full
                 state = env.get_state()
                 game_over = env.game_over(force_recalculate=True)
                 winner = env.winner
                 results.append((state, winner, game_over))
             else:
-                results += get_state_hash_and_winner(env, x + 1, y)
+                results += get_state_hash_and_winner(env, i + 1, 0)
         else:
-            results += get_state_hash_and_winner(env, x, y + 1)
+            results += get_state_hash_and_winner(env, i, j + 1)
 
     return results
 
 
-def initialV(env, state_winner_triples, is_for_x):
+def initialV_x(env, state_winner_triples):
     V = np.zeros(env.num_states)
 
-    for state, winner in state_winner_triples:
-        if winner == env.x:
-            v = 1 if is_for_x else 0
-        elif winner == env.o:
-            v = 0 if is_for_x else 1
+    for state, winner, game_over in state_winner_triples:
+        if game_over:
+            if winner == env.x:
+                v = 1
+            else:
+                v = 0
+        else:
+            v = 0.5
+        V[state] = v
+
+    return V
+
+
+def initialV_o(env, state_winner_triples):
+    V = np.zeros(env.num_states)
+
+    for state, winner, game_over in state_winner_triples:
+        if game_over:
+            if winner == env.o:
+                v = 1
+            else:
+                v = 0
         else:
             v = 0.5
         V[state] = v
@@ -131,8 +152,5 @@ def initialV(env, state_winner_triples, is_for_x):
 
 if __name__ == "__main__":
     env = Environment()
-    env.tiles[0, 0] = env.x
-    env.tiles[0, 1] = env.x
-    env.tiles[0, 2] = env.o
-    env.draw()
-    print("Game Over?", env.game_over())
+    triples = get_state_hash_and_winner(env)
+    print(initialV_o(env, triples))
