@@ -25,7 +25,8 @@ class Agent():
         self.state_history.append(s)
 
     def take_action(self, env):
-        p = np.random.random()
+        p = np.random.rand()
+        pos2value = {}  # debugging
         if p < self.eps:
             if self.verbose:
                 print("Taking a random action")
@@ -33,10 +34,10 @@ class Agent():
             # Get all empty spots
             possible_actions = []
 
-            for y in len(env.tiles):
-                for x in len(env.tiles[0]):
+            for y in xrange(len(env.tiles)):
+                for x in xrange(len(env.tiles[0])):
                     if env.is_empty(x, y):
-                        possible_actions.append((i, j))
+                        possible_actions.append((x, y))
 
             idx = np.random.choice(len(possible_actions))
             next_move = possible_actions[idx]
@@ -46,8 +47,8 @@ class Agent():
             best_value = -1
 
             # loop through all tiles on the board
-            for y in xrange(env.size):
-                for x in xrange(env.size):
+            for y in range(env.size):
+                for x in range(env.size):
                     # if the tile is empty,
                     if env.is_empty(x, y):
                         # if so check this action's value
@@ -55,11 +56,32 @@ class Agent():
                         state = env.get_state()
                         # don't forget to set back to empty
                         env.tiles[y, x] = 0
+                        pos2value[(x, y)] = self.V[state]
                         # set the max value if this value is greater than the previous max
                         if self.V[state] > best_value:
                             best_value = self.V[state]
                             best_state = state
                             next_move = (x, y)
+
+        if self.verbose and p >= self.eps:
+            print("Taking a greedy action")
+            for y in range(env.size):
+                temp = ""
+
+                for x in range(env.size):
+                    if env.is_empty(x, y):
+                        temp += str(round(pos2value[(x, y)], 2)) + " "
+                    else:
+                        if env.tiles[y, x] == env.x:
+                            temp += "X   "
+                        elif env.tiles[y, x] == env.o:
+                            temp += "O   "
+                        else:
+                            temp += "    "
+
+                print(temp)
+
+        env.tiles[next_move[1], next_move[0]] = self.sym
 
     def update(self, env):
         # Will be done at the end of the episode
@@ -73,4 +95,4 @@ class Agent():
             value = self.V[prev] + self.alpha*(target - self.V[prev])
             self.V[prev] = value
             target = value
-        self.reset_history()
+        self.reset_state_history()
