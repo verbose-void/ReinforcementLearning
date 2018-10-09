@@ -38,6 +38,7 @@ if __name__ == "__main__":
         V[s] = 0
     gamma = 1.0
 
+    # Iterative Policy is the action of building the value function
     while True:
         delta = 0
         for s in states:
@@ -79,6 +80,7 @@ if __name__ == "__main__":
         V[s] = 0
     gamma = 0.9
 
+    # Fixed policy is deterministic stepping through values to build the value function.
     while True:
         delta = 0
         for s in states:
