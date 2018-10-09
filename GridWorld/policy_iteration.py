@@ -1,6 +1,6 @@
 import numpy as np
 from grid import standard_grid, negative_grid
-from iterative_policy import print_policy, print_values
+from iterative_policy_evaluation import print_policy, print_values
 
 SMALL_ENOUGH = 10e-4
 GAMMA = 0.9
