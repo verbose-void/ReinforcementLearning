@@ -29,8 +29,9 @@ if __name__ == "__main__":
         V[s] = 0
 
     # Outer loop forces alternation between iteration and improvement.
+    # This finds the optimal value function.
     while True:
-        # Follow Policy.
+        # Follow Policy, and update the value function according to it.
         while True:
             delta = 0
 
@@ -45,6 +46,7 @@ if __name__ == "__main__":
             if delta < SMALL_ENOUGH:
                 break
 
+        # Determine if found policy is best.
         converged = True
         for s in states:
             if s in grid.actions:
