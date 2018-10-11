@@ -77,8 +77,6 @@ class Environment:
 
         return False
 
-        # ... TODO
-
     def get_state(self):
         # creates a hash for the current game state
         h = 0
