@@ -48,6 +48,9 @@ class Grid:
                     row += " X "
             print(row)
 
+    def game_over(self):
+        return self.is_terminal(self.current_state())
+
     def undo_move(self, action):
         if action == "U":
             self.i += 1
