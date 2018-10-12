@@ -9,7 +9,7 @@ ALL_POSSIBLE_ACTIONS = ("U", "D", "L", "R")
 
 def play_game(grid, policy):
     # Start in a random valid position
-    start_states = grid.actions.keys()
+    start_states = list(grid.actions)
     start_idx = np.random.choice(len(start_states))
     grid.set_state(start_states[start_idx])
 
@@ -55,7 +55,7 @@ def max_dict(d):
     # does argmax (key) & max (val) from a dictionary
     max_key = None
     max_val = float("-inf")
-    for k, v in d.iteritems():
+    for k, v in d.items():
         if v > max_val:
             max_key = k
             max_val = v
