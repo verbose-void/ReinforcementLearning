@@ -93,7 +93,7 @@ if __name__ == "__main__":
     deltas = []  # FOR DEBUGGING
 
     # Policy Iteration
-    for t in xrange(2000):
+    for t in range(2000):
         if t % 200:
             print(t)
 
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     plt.show()
 
     V = {}
-    for s, Qs in Q.iteritems():
+    for s, Qs in Q.items():
         V[s] = max_dict(Q[s])[1]
 
     print("\nValues:")

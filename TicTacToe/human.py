@@ -10,7 +10,7 @@ class Human:
 
     def take_action(self, env):
         while True:
-            move = raw_input(
+            move = input(
                 "Enter Coordinates X,Y for your next move (ie: \"0,0\")")
             x, y = move.split(",")
             x = int(x)
@@ -19,7 +19,7 @@ class Human:
                 env.tiles[y, x] = self.sym
                 break
             else:
-                print "Invalid Move"
+                print("Invalid Move")
 
     def update(self, env):
         pass

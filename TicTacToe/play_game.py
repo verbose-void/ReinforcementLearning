@@ -48,7 +48,7 @@ if __name__ == "__main__":
     env = enviro.Environment()
     state_winner_triples = enviro.get_state_hash_and_winner(env)
 
-    ans = raw_input("Load training data from file? (y/n): ")
+    ans = input("Load training data from file? (y/n): ")
     if ans == "y":
         try:
             Vx = np.load("p1_value_data.npy")
@@ -77,13 +77,13 @@ if __name__ == "__main__":
 
     new_ans = "y"
     if ans == "y":
-        new_ans = raw_input("Would you like to continue training? (y/n): ")
+        new_ans = input("Would you like to continue training? (y/n): ")
 
     if new_ans == "y":
         T = 10000
-        for t in xrange(T):
+        for t in range(T):
             if t % 200 == 0:
-                print t
+                print(t)
             play_game(p1, p2, env.reset())
 
     human = Human()
@@ -91,13 +91,13 @@ if __name__ == "__main__":
     p1.set_verbose(True)
 
     while True:
-        res = raw_input("Would you like to play? (y/n): ")
+        res = input("Would you like to play? (y/n): ")
         if res == "y":
             play_game(p1, human, env.reset(), draw=2)
         else:
             break
 
-    ans = raw_input("Would you like to export the training data? (y/n): ")
+    ans = input("Would you like to export the training data? (y/n): ")
     if ans == "y":
         np.save("p1_value_data.npy", p1.V)
         np.save("p2_value_data.npy", p2.V)

@@ -25,23 +25,23 @@ class Environment:
         return self.tiles[y, x] == 0
 
     def draw(self):
-        for y in xrange(self.size):
-            for x in xrange(self.size):
-                print " ",
+        for y in range(self.size):
+            for x in range(self.size):
+                print(" "),
                 if self.tiles[y, x] == self.x:
-                    print "X",
+                    print("X"),
                 elif self.tiles[y, x] == self.o:
-                    print "O",
+                    print("O"),
                 else:
-                    print "-",
-            print ""
+                    print("-"),
+            print("")
 
     def game_over(self, force_recalculate=False):
         if not force_recalculate and self.ended:
             return self.ended
 
         # Check for Horizontal Win
-        for y in xrange(self.size):
+        for y in range(self.size):
             for player in (self.x, self.o):
                 if self.tiles[y].sum() == player*self.size:
                     self.ended = True
@@ -49,7 +49,7 @@ class Environment:
                     return True
 
         # Check for Vertical Win
-        for x in xrange(self.size):
+        for x in range(self.size):
             for player in (self.x, self.o):
                 if self.tiles[:, x].sum() == player*self.size:
                     self.ended = True
@@ -81,8 +81,8 @@ class Environment:
         # creates a hash for the current game state
         h = 0
         k = 0
-        for y in xrange(self.size):
-            for x in xrange(self.size):
+        for y in range(self.size):
+            for x in range(self.size):
                 sym = self.tiles[y, x]
                 if sym == self.x:
                     v = 1

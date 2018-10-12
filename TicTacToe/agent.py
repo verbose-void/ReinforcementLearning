@@ -34,8 +34,8 @@ class Agent():
             # Get all empty spots
             possible_actions = []
 
-            for y in xrange(len(env.tiles)):
-                for x in xrange(len(env.tiles[0])):
+            for y in range(len(env.tiles)):
+                for x in range(len(env.tiles[0])):
                     if env.is_empty(x, y):
                         possible_actions.append((x, y))
 
@@ -60,7 +60,6 @@ class Agent():
                         # set the max value if this value is greater than the previous max
                         if self.V[state] > best_value:
                             best_value = self.V[state]
-                            best_state = state
                             next_move = (x, y)
 
         if self.verbose and p >= self.eps:

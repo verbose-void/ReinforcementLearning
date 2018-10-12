@@ -69,7 +69,7 @@ if __name__ == "__main__":
             # Terminal state or impossible state
             V[s] = 0
 
-    for t in xrange(100):
+    for t in range(100):
         states_and_returns = play_game(grid, policy)
         seen_states = set()
         for s, G in states_and_returns:

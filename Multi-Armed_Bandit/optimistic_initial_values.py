@@ -22,7 +22,7 @@ def run_experiment(m1, m2, m3, upper_limit, N):
         m2, upper_limit), Bandit(m3, upper_limit)]
     data = np.empty(N)
 
-    for i in xrange(N):
+    for i in range(N):
         j = np.argmax([b.mean for b in bandits])
         x = bandits[j].pull()
         bandits[j].update(x)

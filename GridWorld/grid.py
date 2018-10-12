@@ -35,9 +35,9 @@ class Grid:
         return self.rewards.get((self.i, self.j), 0)
 
     def draw(self):
-        for i in xrange(self.height):
+        for i in range(self.height):
             row = ""
-            for j in xrange(self.width):
+            for j in range(self.width):
                 if self.start[0] == i and self.start[1] == j:
                     row += " S "
                 elif not self.is_terminal((i, j)):

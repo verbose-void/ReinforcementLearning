@@ -6,9 +6,9 @@ SMALL_ENOUGH = 10e-4  # convergence threshold
 
 def print_values(V, g):
     print("-----------------------------")
-    for i in xrange(g.height):
+    for i in range(g.height):
         temp = "|"
-        for j in xrange(g.width):
+        for j in range(g.width):
             v = V.get((i, j), 0)
             if v >= 0:
                 temp += " %0.2f " % v + "|"
@@ -20,9 +20,9 @@ def print_values(V, g):
 
 def print_policy(P, g):
     print("-------------")
-    for i in xrange(g.height):
+    for i in range(g.height):
         temp = "|"
-        for j in xrange(g.width):
+        for j in range(g.width):
             temp += " " + P.get((i, j), " ") + "|"
         print(temp)
     print("-------------")

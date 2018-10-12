@@ -29,7 +29,7 @@ def run_experiment_decaying_epsilon(m1, m2, m3, N):
     bandits = [EpsBandit(m1), EpsBandit(m2), EpsBandit(m3)]
     data = np.empty(N)
 
-    for i in xrange(N):
+    for i in range(N):
 
         # decaying greedy-epsilon
         p = np.random.random()
@@ -59,7 +59,7 @@ def run_experiment(m1, m2, m3, N):
 
     data = np.empty(N)
 
-    for i in xrange(N):
+    for i in range(N):
 
         j = np.argmax([b.sample() for b in bandits])
         x = bandits[j].pull()
