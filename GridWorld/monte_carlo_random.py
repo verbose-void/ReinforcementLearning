@@ -19,7 +19,7 @@ def random_action(action, eps=0.5):
 
 def play_game(grid, policy):
     # Start in a random valid position
-    start_states = grid.actions.keys()
+    start_states = list(grid.actions.keys())
     start_idx = np.random.choice(len(start_states))
     grid.set_state(start_states[start_idx])
 
